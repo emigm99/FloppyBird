@@ -1,6 +1,8 @@
    window.addEventListener('load', iniciar, false);
+   var posY = 130;
+   var posX = 130;
+   var teclaC = 0;
 
-   var posX = 200;
 
    function iniciar() {
 
@@ -12,8 +14,7 @@
 
    function partesJuego() {
 
-
-     setInterval(movimiento, 80);
+     setInterval(bird, 80);
    }
 
    function fondo() {
@@ -22,32 +23,43 @@
      lienzo.style.backgroundColor = "blue";
    }
 
-   function bird(x, y) {
+   function bird() {
+
+     console.log(posY);
      ctx = lienzo.getContext("2d");
+     ctx.clearRect(0, 0, 300, 600);
      ctx.beginPath();
-     ctx.rect(x, y, 50, 50);
+     ctx.fillRect(posX,posY, 50, 50);
      ctx.fillStyle = "#F7FE2E";
      ctx.fill();
      ctx.closePath();
+
+     if(teclaC != 38){
+       posY = posY + 10;
+     }
+
+     if(posY < 0){
+       posY = 0;
+     }
+
    }
 
-   function movimiento() {
-     console.log(posX);
-     bird(posX, 280);
-     document.onkeydown = function(event) {
-       var teclaC;
-
-       if (event == null) {
-         teclaC = window.event.keyCode;
-       } else {
-         teclaC = event.keyCode;
-       }
-
-       switch (teclaC) {
-         case 38: //arriba
-           posX = posX + 10;
-           break;
-         default:
-       }
+   document.onkeydown = function(event) {
+     var teclaC;
+     if (event == null) {
+       teclaC = window.event.keyCode;
+     } else {
+       teclaC = event.keyCode;
      }
+
+     switch (teclaC) {
+       case 38: //arriba
+       var cont = 0
+
+         posY = posY - 100;
+
+         break;
+       default:
+     }
+     teclaC = 0;
    }
