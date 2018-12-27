@@ -126,8 +126,7 @@
      switch (teclaC) {
        case 38: //arriba
         velocidad= 0;
-        ctx.clearRect(50, 50, posX, posY);
-         posY = posY - 100;
+         posY = posY - 50;
 
          break;
        default:
