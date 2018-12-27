@@ -10,6 +10,7 @@
    var score = 0;
 
 
+
    function iniciar() {
 
 
@@ -30,9 +31,12 @@
    }
 
    function bird() {
+     var pajaro = new Image;
+     pajaro.src= './imgs/bird5.png'
      ctx.beginPath();
      ctx.fillStyle = "#F7FE2E";
-     ctx.fillRect(posX,posY, 30, 30);
+     ctx.drawImage(pajaro,posX,posY)
+     //ctx.fillRect(posX,posY, 30, 30);
      ctx.closePath();
      if(teclaC != 38){
        posY = posY + velocidad;
@@ -55,13 +59,20 @@
        alturabajo= alturabajo+150;
      }
      //ctx.drawImage(tubou, tuboX, 600-alturabajo);
+     var tuboUp = new Image;
+     tuboUp.src= './imgs/tuboup.png'
+     var tuboDown = new Image;
+     tuboDown.src= './imgs/tubodown.png'
+
      ctx.beginPath();
      ctx.fillStyle = "green";
-     ctx.fillRect(tuboX,600-alturabajo,50,alturabajo);
+      ctx.drawImage(tuboUp,tuboX,600-alturabajo)
+     //ctx.fillRect(tuboX,600-alturabajo,50,alturabajo);
      ctx.closePath();
      ctx.beginPath();
      ctx.fillStyle = "green";
-     ctx.fillRect(tuboX,0,50,(450-alturabajo));
+     ctx.drawImage(tuboDown,tuboX,(450-alturabajo)-492)
+     //ctx.fillRect(tuboX,0,50,(450-alturabajo));
      ctx.closePath();
      console.log("bajo " + alturabajo);
      console.log("arriba " + (alturabajo-200));
@@ -74,10 +85,18 @@
      }
 
    }
-
+   function scoreboard() {
+     if (posX == tuboX+50){
+       score++
+       console.log(score);
+     }
+    ctx = lienzo.getContext("2d")
+    ctx.font = "20px Arial";
+    ctx.fillText(score,5,25);
+   }
    function movimiento(){
      ctx = lienzo.getContext("2d");
-     ctx.clearRect(0, 0, 300, 600);
+
      if ((posY > (600-alturabajo) && tuboX < 150 && tuboX > 80)) {
         activo = false;
         console.log("Fallo");
@@ -86,9 +105,11 @@
        console.log("Fallo");
      }
      if (activo == true) {
-       bird();
-       tubo();
+       requestAnimationFrame(bird);
+       requestAnimationFrame(tubo);
+       scoreboard();
      }
+     ctx.clearRect(0, 0, 300, 600);
 
 
    }

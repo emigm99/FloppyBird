@@ -4,4 +4,7 @@
 }
 canvas{
   border: 3px solid black;
+  background-image: url('../imgs/fondo.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
