@@ -8,3 +8,13 @@ canvas{
   background-repeat: no-repeat;
   background-size: cover;
 }
+@font-face {
+  font-family: FlappyBirds;
+  src: url("../fonts/Flappy-Bird.woff");
+}
+h1{
+  font-family: FlappyBirds;
+  color: red;
+  font-size: 90px;
+  font-weight: normal;
+}

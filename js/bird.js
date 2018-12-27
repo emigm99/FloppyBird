@@ -3,9 +3,10 @@ window.addEventListener('load', iniciar, false);
    var posX = 130;
    var teclaC = 0;
    var velocidad = 0;
-   var alturabajo = Math.random()*450;
-   var alturaarriba = alturabajo-150;
-   var tuboX= 350
+   var alturabajo1 = Math.random()*450;
+   var alturabajo2 = Math.random()*450;
+   var tuboX= 350;
+   var tubo2X = 600;
    var activo = true;
    var score = 0;
 
@@ -52,11 +53,11 @@ window.addEventListener('load', iniciar, false);
 
 
    }
-   function tubo(){
+   function tubo1(){
      tuboX = tuboX - 3;
 
-     if (alturabajo < 150){
-       alturabajo= alturabajo+150;
+     if (alturabajo1 < 150){
+       alturabajo1= alturabajo1+150;
      }
      //ctx.drawImage(tubou, tuboX, 600-alturabajo);
      var tuboUp = new Image;
@@ -66,33 +67,70 @@ window.addEventListener('load', iniciar, false);
 
      ctx.beginPath();
      ctx.fillStyle = "green";
-      ctx.drawImage(tuboUp,tuboX,600-alturabajo)
+      ctx.drawImage(tuboUp,tuboX,600-alturabajo1)
      //ctx.fillRect(tuboX,600-alturabajo,50,alturabajo);
      ctx.closePath();
      ctx.beginPath();
      ctx.fillStyle = "green";
-     ctx.drawImage(tuboDown,tuboX,(450-alturabajo)-492)
+     ctx.drawImage(tuboDown,tuboX,(450-alturabajo1)-492)
      //ctx.fillRect(tuboX,0,50,(450-alturabajo));
      ctx.closePath();
-     console.log("bajo " + alturabajo);
-     console.log("arriba " + (alturabajo-200));
+     console.log("bajo " + alturabajo1);
+     console.log("arriba " + (alturabajo1-200));
      console.log("TUBOX" + tuboX);
      console.log("posY" + posY);
 
-     if (tuboX<-60){
-       tuboX= 320;
-       alturabajo = Math.random()*450;
+     if (tuboX<-130){
+       tuboX= 350;
+       alturabajo1 = Math.random()*450;
+     }
+
+   }
+   function tubo2(){
+     tubo2X = tubo2X - 3;
+
+     if (alturabajo2 < 150){
+       alturabajo2= alturabajo2+150;
+     }
+     //ctx.drawImage(tubou, tuboX, 600-alturabajo);
+     var tuboUp = new Image;
+     tuboUp.src= './imgs/tuboup.png'
+     var tuboDown = new Image;
+     tuboDown.src= './imgs/tubodown.png'
+
+     ctx.beginPath();
+     ctx.fillStyle = "green";
+      ctx.drawImage(tuboUp,tubo2X,600-alturabajo2)
+     //ctx.fillRect(tuboX,600-alturabajo,50,alturabajo);
+     ctx.closePath();
+     ctx.beginPath();
+     ctx.fillStyle = "green";
+     ctx.drawImage(tuboDown,tubo2X,(450-alturabajo2)-492)
+     //ctx.fillRect(tuboX,0,50,(450-alturabajo));
+     ctx.closePath();
+     console.log("bajo " + alturabajo2);
+     console.log("arriba " + (alturabajo2-200));
+     console.log("TUBOX" + tubo2X);
+     console.log("posY" + posY);
+
+     if (tubo2X<-130){
+       tubo2X= 350;
+       alturabajo2 = Math.random()*450;
      }
 
    }
    function scoreboard() {
-     if (posX == tuboX+50){
+     if (posX == tuboX+50) {
+       score++
+       console.log(score);
+     }else if ( (posX == tubo2X+50)) {
        score++
        console.log(score);
      }
     ctx = lienzo.getContext("2d")
-    ctx.font = "20px Arial";
-    ctx.fillText(score,5,25);
+    ctx.fillStyle = "yellow";
+    ctx.font = "lighter 60px FlappyBirds";
+    ctx.fillText(score,8,35);
    }
    function movimiento(){
      ctx = lienzo.getContext("2d");
@@ -100,7 +138,8 @@ window.addEventListener('load', iniciar, false);
 
      if (activo == true) {
        requestAnimationFrame(bird);
-       requestAnimationFrame(tubo);
+       requestAnimationFrame(tubo1);
+        requestAnimationFrame(tubo2);
        requestAnimationFrame(scoreboard);
         requestAnimationFrame(hitbox);
      }
@@ -109,12 +148,12 @@ window.addEventListener('load', iniciar, false);
 
    }
 function hitbox(){
-  if ((posY > (580-alturabajo) && tuboX < 172 && tuboX > 80)) {
+  if (((posY > (580-alturabajo1) && tuboX < 172 && tuboX > 80))||((posY > (580-alturabajo2) && tubo2X < 172 && tubo2X > 80))) {
      activo = false;
-     console.log("PosY: " + posY + " PosX " + posX + " TuboX " + tuboX + " Altura Abajo " + (600-alturabajo));
-  }else if (posY < (450-alturabajo) && tuboX < 172 && tuboX > 80) {
+     console.log("PosY: " + posY + " PosX " + posX + " TuboX " + tuboX + " Altura Abajo " + (600-alturabajo1));
+  }else if ((posY < (450-alturabajo1) && tuboX < 172 && tuboX > 80)||(posY < (450-alturabajo2) && tubo2X < 172 && tubo2X > 80)) {
     activo = false;
-    console.log("PosY: " + posY + " PosX " + posX + "TuboX" + tuboX + " Altura Arriba " + (450-alturabajo));
+    console.log("PosY: " + posY + " PosX " + posX + "TuboX" + tuboX + " Altura Arriba " + (450-alturabajo1));
   }
 }
 
