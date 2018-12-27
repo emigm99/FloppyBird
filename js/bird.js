@@ -1,4 +1,4 @@
-   window.addEventListener('load', iniciar, false);
+window.addEventListener('load', iniciar, false);
    var posY = 130;
    var posX = 130;
    var teclaC = 0;
@@ -79,8 +79,8 @@
      console.log("TUBOX" + tuboX);
      console.log("posY" + posY);
 
-     if (tuboX<-30){
-       tuboX= 350;
+     if (tuboX<-60){
+       tuboX= 320;
        alturabajo = Math.random()*450;
      }
 
@@ -96,24 +96,27 @@
    }
    function movimiento(){
      ctx = lienzo.getContext("2d");
+     ctx.clearRect(0, 0, 300, 600);
 
-     if ((posY > (600-alturabajo) && tuboX < 150 && tuboX > 80)) {
-        activo = false;
-        console.log("Fallo");
-     }else if (posY < (450-alturabajo) && tuboX < 150 && tuboX > 80) {
-       activo = false;
-       console.log("Fallo");
-     }
      if (activo == true) {
        requestAnimationFrame(bird);
        requestAnimationFrame(tubo);
-       scoreboard();
+       requestAnimationFrame(scoreboard);
+        requestAnimationFrame(hitbox);
      }
-     ctx.clearRect(0, 0, 300, 600);
+
 
 
    }
-
+function hitbox(){
+  if ((posY > (580-alturabajo) && tuboX < 172 && tuboX > 80)) {
+     activo = false;
+     console.log("PosY: " + posY + " PosX " + posX + " TuboX " + tuboX + " Altura Abajo " + (600-alturabajo));
+  }else if (posY < (450-alturabajo) && tuboX < 172 && tuboX > 80) {
+    activo = false;
+    console.log("PosY: " + posY + " PosX " + posX + "TuboX" + tuboX + " Altura Arriba " + (450-alturabajo));
+  }
+}
 
    document.onkeydown = function(event) {
      var teclaC;
@@ -125,7 +128,7 @@
 
      switch (teclaC) {
        case 38: //arriba
-        velocidad= 0;
+        velocidad= -8;
          posY = posY - 50;
 
          break;
