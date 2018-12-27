@@ -2,15 +2,16 @@
    var posY = 130;
    var posX = 130;
    var teclaC = 0;
-   var velocidad = 2;
-   var alturabajo = Math.random()*550;
+   var velocidad = 0;
+   var alturabajo = Math.random()*450;
    var alturaarriba = alturabajo-150;
    var tuboX= 350
+   var activo = true;
+   var score = 0;
 
 
    function iniciar() {
-     var tubou = new Image()
-     tubou.src = "./imgs/tubou.png"
+
 
      fondo();
      partesJuego();
@@ -19,9 +20,7 @@
    }
 
    function partesJuego() {
-     setInterval(bird, 80);
-    setInterval(tubo1, 10);
-    setInterval(movimiento,100);
+    setInterval(movimiento,30);
    }
 
    function fondo() {
@@ -31,16 +30,13 @@
    }
 
    function bird() {
-
-     ctx = lienzo.getContext("2d");
      ctx.beginPath();
-     ctx.clearRect(30, 30, posX, posY);
      ctx.fillStyle = "#F7FE2E";
      ctx.fillRect(posX,posY, 30, 30);
      ctx.closePath();
      if(teclaC != 38){
        posY = posY + velocidad;
-       velocidad= velocidad + 2;
+       velocidad= velocidad + 1;
      }
 
      if(posY < 1){
@@ -50,35 +46,53 @@
        posY = lienzo.height-30;
      }
 
+
+   }
+   function tubo(){
+     tuboX = tuboX - 3;
+
+     if (alturabajo < 150){
+       alturabajo= alturabajo+150;
+     }
+     //ctx.drawImage(tubou, tuboX, 600-alturabajo);
+     ctx.beginPath();
+     ctx.fillStyle = "green";
+     ctx.fillRect(tuboX,600-alturabajo,50,alturabajo);
+     ctx.closePath();
+     ctx.beginPath();
+     ctx.fillStyle = "green";
+     ctx.fillRect(tuboX,0,50,(450-alturabajo));
+     ctx.closePath();
+     console.log("bajo " + alturabajo);
+     console.log("arriba " + (alturabajo-200));
+     console.log("TUBOX" + tuboX);
+     console.log("posY" + posY);
+
+     if (tuboX<-30){
+       tuboX= 350;
+       alturabajo = Math.random()*450;
+     }
+
    }
 
    function movimiento(){
-     tuboX = tuboX - 5;
-   }
-
-   function tubo1(){
-
-
-     if (alturabajo < 200){
-       alturabajo= alturabajo+200;
+     ctx = lienzo.getContext("2d");
+     ctx.clearRect(0, 0, 300, 600);
+     if ((posY > (600-alturabajo) && tuboX < 150 && tuboX > 80)) {
+        activo = false;
+        console.log("Fallo");
+     }else if (posY < (450-alturabajo) && tuboX < 150 && tuboX > 80) {
+       activo = false;
+       console.log("Fallo");
+     }
+     if (activo == true) {
+       bird();
+       tubo();
      }
 
-     console.log(alturabajo);
-     tubo = lienzo.getContext("2d");
-     tubo.beginPath();
-     tubo.clearRect(tuboX+60,alturabajo,60,610-alturabajo);
-     tubo.fillStyle = "green";
-     tubo.fillRect(tuboX,alturabajo, 60,600-alturabajo);
-     tubo.closePath();
-     tubo.beginPath();
-     tubo.clearRect(tuboX+60,0,60, alturaarriba+2);
-     tubo.fillStyle = "green";
-     tubo.fillRect(tuboX,0, 60,alturaarriba);
-     tubo.closePath();
 
-
-     console.log("Tubo");
    }
+
 
    document.onkeydown = function(event) {
      var teclaC;
