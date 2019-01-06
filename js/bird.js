@@ -44,11 +44,8 @@ window.addEventListener('load', iniciar, false);
        velocidad= velocidad + 1;
      }
 
-     if(posY < 1){
-       posY = 1;
-     }
      if(posY > lienzo.height-30){
-       posY = lienzo.height-30;
+       activo = false;
      }
 
 
